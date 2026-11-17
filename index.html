@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SCB – Mockup do app (Sprint 3)</title>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--blue:#1456d9;--blue-d:#0d3fa8;--blue-l:#e8f0ff;--bg:#fff;--page:#eef3fc;--ink:#0f1b33;--mut:#5b6b88;--line:#d5deef;--err:#c62828;--ok:#1b7f4b;--on:#fff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1a33;--page:#08101f;--ink:#eef3ff;--mut:#9fb0d0;--line:#243558;--blue-l:#17294f;--blue:#4d8bff;--blue-d:#6b9fff;--on:#06122b;--err:#ff8a80;--ok:#6fdc9f}}
+:root[data-theme="dark"]{--bg:#0e1a33;--page:#08101f;--ink:#eef3ff;--mut:#9fb0d0;--line:#243558;--blue-l:#17294f;--blue:#4d8bff;--blue-d:#6b9fff;--on:#06122b;--err:#ff8a80;--ok:#6fdc9f}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;font-family:Figtree,system-ui,sans-serif;background:var(--page);color:var(--ink);min-height:100vh;display:flex;gap:40px;align-items:center;justify-content:center;padding:24px;flex-wrap:wrap}
+.side{max-width:280px}
+.side h1{font-size:22px;margin:0 0 6px;font-weight:800}
+.side p{color:var(--mut);font-size:14px;line-height:1.5;margin:0 0 16px}
+.side button{display:block;width:100%;text-align:left;margin-bottom:8px;padding:10px 14px;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:10px;font:600 14px Figtree,sans-serif;cursor:pointer}
+.side button:hover,.side button.on{border-color:var(--blue);background:var(--blue-l)}
+.side label{display:flex;gap:8px;align-items:center;font-size:14px;color:var(--mut);margin-top:12px}
+.phone{width:375px;height:760px;max-width:100%;background:var(--bg);border-radius:38px;border:10px solid #0b1530;position:relative;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 20px 50px rgba(13,63,168,.25)}
+.status{height:28px;display:flex;justify-content:space-between;align-items:center;padding:0 22px;font-size:12px;font-weight:600;color:var(--mut);flex:none}
+.screen{display:none;flex:1;flex-direction:column;overflow-y:auto;padding:8px 22px 22px}
+.screen.on{display:flex}
+.hero{background:var(--blue);color:#fff;border-radius:0 0 28px 28px;margin:0 -22px 22px;padding:26px 22px 30px}
+.hero .logo{width:44px;height:44px;border-radius:14px;background:#fff;color:var(--blue);display:grid;place-items:center;margin-bottom:14px}
+.hero h2{margin:0;font-size:26px;font-weight:800;letter-spacing:-.3px}
+.hero p{margin:4px 0 0;opacity:.9;font-size:14px}
+h3{font-size:22px;margin:6px 0 4px;font-weight:800}
+.sub{color:var(--mut);font-size:14px;margin:0 0 16px}
+.f{margin-bottom:12px}
+.f label{display:block;font-size:13px;font-weight:600;margin-bottom:5px}
+.f input,.f select{width:100%;height:46px;border:1.5px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink);padding:0 14px;font:500 15px Figtree,sans-serif}
+.f input:focus,.f select:focus,button:focus-visible{outline:3px solid color-mix(in srgb,var(--blue) 40%,transparent);border-color:var(--blue)}
+.f.bad input,.f.bad select,.f.bad .photo{border-color:var(--err)}
+.msg{display:none;color:var(--err);font-size:12.5px;margin-top:4px}
+.f.bad .msg{display:block}
+.btn{height:50px;border:0;border-radius:14px;background:var(--blue);color:var(--on);font:700 16px Figtree,sans-serif;cursor:pointer;width:100%;margin-top:6px}
+.btn:active{background:var(--blue-d)}
+.btn.sec{background:transparent;color:var(--blue);border:1.5px solid var(--blue)}
+.link{background:none;border:0;color:var(--blue);font:600 14px Figtree,sans-serif;cursor:pointer;padding:10px;margin:auto}
+.pw{position:relative}.pw button{position:absolute;right:6px;top:5px;height:36px;border:0;background:none;color:var(--blue);font:600 13px Figtree,sans-serif;cursor:pointer}
+.photo{border:1.5px dashed var(--line);border-radius:12px;height:96px;display:flex;align-items:center;justify-content:center;gap:12px;color:var(--mut);font-size:14px;cursor:pointer;overflow:hidden;background:var(--blue-l)}
+.photo img{height:100%;width:100%;object-fit:cover}
+.alert{display:none;background:color-mix(in srgb,var(--err) 12%,var(--bg));border:1px solid var(--err);color:var(--err);border-radius:12px;padding:10px 12px;font-size:13.5px;margin-bottom:12px}
+.alert.on{display:block}
+.menu{display:grid;gap:12px;margin-top:6px}
+.item{display:flex;align-items:center;gap:14px;padding:16px;border:1.5px solid var(--line);border-radius:16px;background:var(--bg);color:var(--ink);font:700 16px Figtree,sans-serif;text-align:left;cursor:pointer;width:100%}
+.item i{width:42px;height:42px;border-radius:12px;background:var(--blue-l);color:var(--blue);display:grid;place-items:center;flex:none}
+.item small{display:block;font-weight:500;color:var(--mut);font-size:12.5px;margin-top:2px}
+.item[disabled]{opacity:.55;cursor:not-allowed}
+.item:not([disabled]):hover{border-color:var(--blue)}
+.toast{position:absolute;left:18px;right:18px;bottom:20px;background:var(--ink);color:var(--bg);padding:13px 16px;border-radius:14px;font-size:14px;font-weight:600;opacity:0;transform:translateY(12px);transition:.25s;pointer-events:none}
+.toast.on{opacity:1;transform:none}
+.row{display:flex;gap:8px}.row>*{flex:1}
+.seg{display:flex;border:1.5px solid var(--line);border-radius:12px;overflow:hidden}
+.seg button{flex:1;height:44px;border:0;background:var(--bg);color:var(--mut);font:600 14px Figtree,sans-serif;cursor:pointer}
+.seg button.on{background:var(--blue);color:var(--on)}
+.cc{background:var(--blue);color:#fff;border-radius:18px;height:172px;padding:18px;display:flex;flex-direction:column;justify-content:space-between;margin-bottom:16px}
+.cc b{font-size:15px;font-weight:700}.cc .num{font-size:20px;font-weight:600;letter-spacing:2px}.cc .bot{display:flex;justify-content:space-between;font-size:12.5px;font-weight:600;gap:8px}
+svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* US06 – Mapa */
+#mapa{padding:0;overflow:hidden}
+.mhead{display:flex;align-items:center;gap:12px;padding:8px 22px 10px;flex:none}
+.mhead h3{margin:0;font-size:20px}.mhead p{margin:0;color:var(--mut);font-size:13px}
+.back{width:40px;height:40px;flex:none;border:1.5px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink);display:grid;place-items:center;cursor:pointer}
+.chips{margin:0 22px 10px;flex:none}.chips button{font-size:13px;height:40px}
+.mapbox{position:relative;height:270px;flex:none;background:var(--blue-l);border-block:1px solid var(--line);overflow:hidden}
+.mapbg{position:absolute;inset:0;width:100%;height:100%;stroke:none}
+.mapbox.dim .pin,.mapbox.dim .me{display:none}
+.pin{position:absolute;transform:translate(-50%,-100%);min-width:38px;height:32px;padding:0 8px;border-radius:12px;border:2px solid var(--bg);background:var(--blue);color:var(--on);font:800 15px Figtree,sans-serif;cursor:pointer;box-shadow:0 3px 8px rgba(13,63,168,.3)}
+.pin::after{content:"";position:absolute;left:50%;bottom:-6px;width:10px;height:10px;background:inherit;transform:translateX(-50%) rotate(45deg);border-right:2px solid var(--bg);border-bottom:2px solid var(--bg)}
+.pin.zero{background:var(--mut);color:var(--bg)}
+.pin.sel{transform:translate(-50%,-100%) scale(1.18);box-shadow:0 0 0 3px color-mix(in srgb,var(--blue) 35%,transparent);z-index:5}
+.me{position:absolute;transform:translate(-50%,-50%);width:16px;height:16px;border-radius:50%;background:var(--ok);border:3px solid var(--bg);pointer-events:none}
+.me::after{content:"";position:absolute;inset:-12px;border-radius:50%;background:var(--ok);opacity:.25;animation:pulse 2s infinite}
+.me span{position:absolute;top:16px;left:50%;transform:translateX(-50%);font-size:11px;font-weight:700;color:var(--ink);background:var(--bg);padding:0 5px;border-radius:6px}
+@keyframes pulse{0%{transform:scale(.6);opacity:.4}100%{transform:scale(1.2);opacity:0}}
+.mbtn{position:absolute;top:10px;right:12px;width:40px;height:40px;border-radius:50%;border:1.5px solid var(--line);background:var(--bg);color:var(--blue);display:grid;place-items:center;cursor:pointer}
+.legend{position:absolute;left:12px;bottom:10px;background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:5px 11px;font-size:12px;font-weight:600}
+.sheet{flex:1;overflow-y:auto;padding:14px 22px 22px}
+.lh{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}.lh b{font-size:16px}.lh span{color:var(--mut);font-size:12.5px}
+.tcard{display:flex;align-items:center;gap:12px;width:100%;padding:12px;border:1.5px solid var(--line);border-radius:14px;background:var(--bg);color:var(--ink);text-align:left;cursor:pointer;margin-bottom:8px;font:600 14px Figtree,sans-serif}
+.tcard:hover{border-color:var(--blue)}
+.tcard .n{width:40px;height:40px;border-radius:12px;background:var(--blue);color:var(--on);display:grid;place-items:center;font-weight:800;font-size:16px;flex:none}
+.tcard .n.zero{background:var(--mut);color:var(--bg)}
+.tcard small{display:block;color:var(--mut);font-weight:500;font-size:12.5px;margin-top:2px}
+.tcard .r{margin-left:auto;text-align:right;font-size:12.5px;color:var(--mut);font-weight:600;white-space:nowrap}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0 12px}
+.stat{border:1.5px solid var(--line);border-radius:14px;padding:12px;background:var(--blue-l)}
+.stat b{display:block;font-size:26px;font-weight:800;color:var(--blue)}.stat span{font-size:12.5px;color:var(--mut);font-weight:600}
+.badge{display:inline-block;font-size:12.5px;font-weight:700;padding:3px 10px;border-radius:999px;background:color-mix(in srgb,var(--ok) 14%,var(--bg));color:var(--ok);border:1px solid var(--ok)}
+.badge.no{background:color-mix(in srgb,var(--err) 12%,var(--bg));color:var(--err);border-color:var(--err)}
+.ids{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 14px}.ids span{font-size:12.5px;font-weight:600;padding:4px 10px;border-radius:999px;border:1px solid var(--line)}
+.lk{background:none;border:0;color:var(--blue);font:600 14px Figtree,sans-serif;cursor:pointer;padding:4px 0;margin:0 0 6px}
+.btn[disabled]{opacity:.55;cursor:not-allowed}
+/* US07 – Aluguel */
+.hint{font-size:12.5px;color:var(--mut);margin:18px 0 6px;font-weight:600}
+.chipb{font:600 12.5px Figtree,sans-serif;padding:6px 11px;border-radius:999px;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
+.chipb:hover{border-color:var(--blue)}
+.lock{width:56px;height:56px;border-radius:18px;background:var(--blue-l);color:var(--blue);display:grid;place-items:center;margin-bottom:12px}.lock svg{width:28px;height:28px}
+.info{background:var(--blue-l);border-radius:12px;padding:10px 12px;font-size:13px;color:var(--ink);margin:0 0 12px}
+@media (prefers-reduced-motion:reduce){.me::after{animation:none}}
+@media (max-width:480px){body{padding:0}.phone{border:0;border-radius:0;height:100vh;width:100%}.side{padding:16px}}
+@media (prefers-reduced-motion:reduce){.toast{transition:none}}
+.f textarea{width:100%;border:1.5px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink);padding:12px 14px;font:500 15px Figtree,sans-serif;resize:vertical;min-height:96px}
+.f textarea:focus{outline:3px solid color-mix(in srgb,var(--blue) 40%,transparent);border-color:var(--blue)}
+.f.bad textarea{border-color:var(--err)}
+.chipb.on{background:var(--blue);color:var(--on);border-color:var(--blue)}
+.rfid{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;border:1.5px dashed var(--line);border-radius:16px;padding:18px 14px;margin:4px 0 12px}
+.rfid .wave{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;background:var(--blue-l);color:var(--blue);margin-bottom:6px}
+.rfid .wave svg{width:28px;height:28px}
+.rfid span{font-size:13px;color:var(--mut)}
+.rfid.read .wave{animation:rf 1s ease-in-out infinite}
+.rfid.ok{border:1.5px solid var(--ok)}.rfid.ok .wave{background:color-mix(in srgb,var(--ok) 15%,var(--bg));color:var(--ok)}
+.rfid.bad{border:1.5px solid var(--err)}.rfid.bad .wave{background:color-mix(in srgb,var(--err) 12%,var(--bg));color:var(--err)}
+@keyframes rf{50%{transform:scale(1.12);opacity:.7}}
+@media (prefers-reduced-motion:reduce){.rfid.read .wave{animation:none}}
+</style>
+</head>
+<body>
+<aside class="side">
+  <h1>App SCB · Sprint 3</h1>
+  <p>Mockup interativo do app da VáDeBicicleta. Teste o fluxo ou pule direto para uma tela. Conta de teste: <b>maria@scb.com</b> / <b>senha1234</b>.</p>
+  <button data-go="login">US02 · Login</button>
+  <button data-go="cadastro">US01 · Cadastro</button>
+  <button data-go="home">US03 · Tela inicial</button>
+  <button data-go="dados">US04 · Alterar dados</button>
+  <button data-go="cartao">US05 · Cartão de crédito</button>
+  <button data-go="mapa">US06 · Mapa de totens</button>
+  <button data-go="aluguel">US07 · Iniciar aluguel</button>
+  <button data-go="devolucao">US08 · Devolução por RFID</button>
+  <button data-go="problema">US09 · Problema com o aluguel</button>
+  <label><input type="checkbox" id="offline"> Simular falta de conexão (T12)</label>
+</aside>
+
+<main class="phone" aria-label="Aplicativo SCB">
+  <div class="status"><span>9:41</span><span>SCB</span></div>
+
+  <section class="screen on" id="login">
+    <div class="hero">
+      <div class="logo"><svg viewBox="0 0 24 24"><circle cx="5.5" cy="17" r="3.5"/><circle cx="18.5" cy="17" r="3.5"/><path d="M5.5 17 9 8h5l4.5 9M9 8 12 17M13 5h3"/></svg></div>
+      <h2>VáDeBicicleta</h2><p>Retire em um totem, devolva em qualquer vaga.</p>
+    </div>
+    <h3>Entrar</h3><p class="sub">Acesse sua conta de ciclista.</p>
+    <div class="alert" id="loginErr" role="alert"></div>
+    <div class="f" id="fl-email"><label for="l-email">E-mail</label><input id="l-email" type="email" autocomplete="username"><div class="msg">Informe o e-mail.</div></div>
+    <div class="f" id="fl-pass"><label for="l-pass">Senha</label><div class="pw"><input id="l-pass" type="password" autocomplete="current-password"><button type="button" data-eye="l-pass">Mostrar</button></div><div class="msg">Informe a senha.</div></div>
+    <button class="btn" id="btnLogin">Entrar</button>
+    <button class="link" data-go="cadastro">Criar conta</button>
+  </section>
+
+  <section class="screen" id="cadastro">
+    <h3>Criar conta</h3><p class="sub">Todos os campos são obrigatórios.</p>
+    <div class="f" id="fc-nome"><label for="c-nome">Nome completo</label><input id="c-nome" autocomplete="name"><div class="msg">Informe seu nome.</div></div>
+    <div class="f"><label>Nacionalidade</label><div class="seg" id="nac"><button type="button" class="on" data-n="br">Brasileiro</button><button type="button" data-n="es">Estrangeiro</button></div></div>
+    <div class="f" id="fc-doc"><label for="c-doc" id="docLbl">CPF</label><input id="c-doc" inputmode="numeric" placeholder="000.000.000-00"><div class="msg" id="docMsg">CPF inválido.</div></div>
+    <div class="f" id="fc-foto"><label>Foto do documento</label>
+      <div class="photo" id="photo" tabindex="0" role="button"><span id="photoTxt">Tocar para tirar foto ou escolher da galeria</span></div>
+      <input type="file" id="file" accept="image/*" hidden>
+      <div class="msg">Anexe a foto do documento.</div></div>
+    <div class="f" id="fc-email"><label for="c-email">E-mail</label><input id="c-email" type="email" autocomplete="email"><div class="msg">Informe um e-mail válido.</div></div>
+    <div class="f" id="fc-pass"><label for="c-pass">Senha</label><div class="pw"><input id="c-pass" type="password" autocomplete="new-password"><button type="button" data-eye="c-pass">Mostrar</button></div><div class="msg">Use no mínimo 8 caracteres.</div></div>
+    <button class="btn" id="btnCad">Criar conta</button>
+    <button class="link" data-go="login">Já tenho conta</button>
+  </section>
+
+  <section class="screen" id="home">
+    <div class="hero">
+      <p>Bom te ver de volta</p>
+      <h2 id="greet">Olá, Maria</h2>
+    </div>
+    <div class="menu">
+      <button class="item" data-go="aluguel"><i><svg viewBox="0 0 24 24"><circle cx="5.5" cy="17" r="3.5"/><circle cx="18.5" cy="17" r="3.5"/><path d="M5.5 17 9 8h5l4.5 9M9 8 12 17"/></svg></i><span>Alugar bicicleta<small id="rentSub">Informe o número da tranca</small></span></button>
+      <button class="item" data-go="devolucao" id="homeDev" hidden><i><svg viewBox="0 0 24 24"><path d="M8.5 8.5a5 5 0 0 1 0 7M12 6a8.5 8.5 0 0 1 0 12M15.5 3.5a12 12 0 0 1 0 17"/></svg></i><span>Devolver bicicleta<small id="devSub">Leitura da tag RFID no totem</small></span></button>
+      <button class="item" data-go="mapa"><i><svg viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></i><span>Mapa de totens<small>Bicicletas e vagas perto de você</small></span></button>
+      <button class="item" data-go="dados"><i><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg></i><span>Meus dados<small>Nome, e-mail e documento</small></span></button>
+      <button class="item" data-go="cartao"><i><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3 10h18M7 15h4"/></svg></i><span>Cartão de crédito<small id="cardSub">Cadastre para alugar</small></span></button>
+      <button class="item" data-go="problema"><i><svg viewBox="0 0 24 24"><path d="M12 3 2.5 20h19L12 3zM12 10v4M12 17.5v.01"/></svg></i><span>Problema com o aluguel<small>Tranca, bicicleta, devolução ou cobrança</small></span></button>
+      <button class="item" id="btnSair"><i><svg viewBox="0 0 24 24"><path d="M9 21H5V3h4M16 17l5-5-5-5M21 12H9"/></svg></i><span>Sair</span></button>
+    </div>
+  </section>
+
+  <section class="screen" id="dados">
+    <h3>Meus dados</h3><p class="sub">Atualize suas informações cadastrais.</p>
+    <div class="f" id="fd-nome"><label for="d-nome">Nome completo</label><input id="d-nome"><div class="msg">Informe seu nome.</div></div>
+    <div class="f" id="fd-email"><label for="d-email">E-mail</label><input id="d-email" type="email"><div class="msg">Informe um e-mail válido.</div></div>
+    <div class="f" id="fd-doc"><label for="d-doc">Número do documento</label><input id="d-doc"><div class="msg">Documento inválido.</div></div>
+    <div class="f" id="fd-foto"><label>Foto do documento</label><div class="photo" id="photoD" tabindex="0" role="button"></div><input type="file" id="fileD" accept="image/*" hidden><div class="msg">Anexe a foto do documento.</div></div>
+    <button class="btn" id="btnSalvar">Salvar alterações</button>
+    <button class="btn sec" id="btnCancel">Cancelar</button>
+  </section>
+
+  <section class="screen" id="cartao">
+    <h3>Cartão de crédito</h3><p class="sub">Usado para cobrar a taxa básica de 2 horas. Você pode trocar a qualquer momento.</p>
+    <div class="cc" aria-hidden="true"><b id="ccBrand">Cartão</b><div class="num" id="ccNum">•••• •••• •••• ••••</div><div class="bot"><span id="ccName">NOME NO CARTÃO</span><span id="ccExp">MM/AA</span></div></div>
+    <div class="f" id="fk-num"><label for="k-num">Número do cartão</label><input id="k-num" inputmode="numeric" autocomplete="cc-number" placeholder="0000 0000 0000 0000"><div class="msg">Número de cartão inválido.</div></div>
+    <div class="f" id="fk-nome"><label for="k-nome">Nome impresso no cartão</label><input id="k-nome" autocomplete="cc-name"><div class="msg">Informe o nome como está no cartão.</div></div>
+    <div class="row">
+      <div class="f" id="fk-val"><label for="k-val">Validade</label><input id="k-val" inputmode="numeric" autocomplete="cc-exp" placeholder="MM/AA"><div class="msg">Validade inválida ou vencida.</div></div>
+      <div class="f" id="fk-cvv"><label for="k-cvv">CVV</label><input id="k-cvv" inputmode="numeric" autocomplete="cc-csc" type="password" maxlength="4" placeholder="000"><div class="msg">Informe 3 ou 4 dígitos.</div></div>
+    </div>
+    <p class="sub" style="font-size:12.5px;margin:0 0 6px">O app guarda apenas os 4 últimos dígitos. O número completo não é armazenado.</p>
+    <button class="btn" id="btnCartao">Salvar cartão</button>
+    <button class="btn sec" id="btnCartaoVoltar">Voltar</button>
+  </section>
+
+  <section class="screen" id="mapa">
+    <div class="mhead">
+      <button class="back" data-go="home" aria-label="Voltar para a tela inicial"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <div><h3>Mapa de totens</h3><p>Encontre bicicletas e vagas por perto.</p></div>
+    </div>
+    <div class="seg chips" id="mChips" role="group" aria-label="Filtrar totens">
+      <button type="button" class="on" data-f="all" aria-pressed="true">Todos</button>
+      <button type="button" data-f="bikes" aria-pressed="false">Com bicicletas</button>
+      <button type="button" data-f="slots" aria-pressed="false">Com vagas</button>
+    </div>
+    <div class="mapbox" id="mapBox">
+      <svg class="mapbg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0 80C10 78 16 90 26 92L26 100L0 100Z" fill="color-mix(in srgb,var(--blue) 25%,var(--bg))"/>
+        <rect x="58" y="10" width="28" height="28" rx="3" fill="color-mix(in srgb,var(--ok) 18%,var(--bg))"/>
+        <g stroke="var(--bg)" stroke-linecap="round" fill="none">
+          <path d="M0 46H100" stroke-width="9" vector-effect="non-scaling-stroke"/>
+          <path d="M34 0V100" stroke-width="9" vector-effect="non-scaling-stroke"/>
+          <path d="M0 14L100 90" stroke-width="7" vector-effect="non-scaling-stroke"/>
+          <path d="M62 0V100" stroke-width="5" vector-effect="non-scaling-stroke"/>
+          <path d="M0 68H100M0 24H58M88 62V100" stroke-width="4" vector-effect="non-scaling-stroke"/>
+        </g>
+      </svg>
+      <div id="pins"></div>
+      <div class="me" id="meDot" style="left:52%;top:64%"><span>Você</span></div>
+      <button class="mbtn" id="mRefresh" aria-label="Atualizar mapa"><svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.3-5.7M20 4v5h-5"/></svg></button>
+      <div class="legend" id="mLegend" aria-live="polite">Número no pino: bicicletas</div>
+    </div>
+    <div class="sheet" id="mSheet" aria-live="polite"></div>
+  </section>
+
+  <section class="screen" id="aluguel">
+    <div class="mhead" style="margin:0 -22px"><button class="back" data-go="home" aria-label="Voltar para a tela inicial"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button><div><h3>Iniciar aluguel</h3><p>Informe a tranca da bicicleta.</p></div></div>
+    <div id="rForm">
+      <div class="lock"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="3"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></div>
+      <div class="alert" id="rErr" role="alert"></div>
+      <div class="f" id="fr-num"><label for="r-num">Número da tranca</label><input id="r-num" inputmode="numeric" maxlength="6" placeholder="Ex.: 101" autocomplete="off"><div class="msg">Informe o número da tranca (apenas dígitos).</div></div>
+      <p class="sub" style="font-size:12.5px;margin:0 0 6px">O número está impresso na tranca, ao lado da bicicleta.</p>
+      <button class="btn" id="btnAlugar">Iniciar aluguel</button>
+      <div class="hint">Mockup · números para testar</div>
+      <div class="ids" id="rHints"><button class="chipb" data-tr="101">101 · disponível</button><button class="chipb" data-tr="105">105 · disponível</button><button class="chipb" data-tr="102">102 · sem bicicleta</button><button class="chipb" data-tr="103">103 · em manutenção</button><button class="chipb" data-tr="104">104 · tranca com defeito</button><button class="chipb" data-tr="999">999 · inexistente</button></div>
+      <button class="link" id="rProb">Problema para alugar? Relatar</button>
+    </div>
+    <div id="rActive" hidden>
+      <div class="alert on" role="status" style="background:color-mix(in srgb,var(--ok) 12%,var(--bg));border-color:var(--ok);color:var(--ok)"><b>Aluguel ativo.</b> Retire a bicicleta; a tranca foi liberada.</div>
+      <div class="stats"><div class="stat"><b id="raBike">#0000</b><span>Bicicleta</span></div><div class="stat"><b id="raTr">000</b><span>Tranca</span></div></div>
+      <p class="sub" id="raInfo" style="margin-bottom:10px"></p>
+      <p class="info">Só é permitido <b>um aluguel ativo por vez</b>. Para alugar outra bicicleta, devolva esta primeiro.</p>
+      <div class="info" id="raProb" hidden></div>
+      <button class="btn" data-go="devolucao">Devolver bicicleta</button>
+      <button class="btn sec" data-go="home">Voltar ao início</button>
+      <button class="link" id="raRelatar">Relatar problema</button>
+    </div>
+  </section>
+
+  <section class="screen" id="devolucao">
+    <div class="mhead" style="margin:0 -22px"><button class="back" data-go="aluguel" aria-label="Voltar para o aluguel"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button><div><h3>Devolver bicicleta</h3><p>Encaixe na vaga e aguarde a leitura RFID.</p></div></div>
+    <div id="dNone" hidden>
+      <p class="sub">Você não tem aluguel ativo para devolver.</p>
+      <button class="btn" data-go="home">Voltar ao início</button>
+    </div>
+    <div id="dForm">
+      <div class="alert" id="dErr" role="alert"></div>
+      <div class="f" id="fd-totem"><label for="d-totem">Totem de devolução</label><select id="d-totem"></select><div class="msg">Escolha um totem com vaga livre.</div></div>
+      <div class="rfid" id="rfid" aria-live="polite">
+        <div class="wave" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8.5 8.5a5 5 0 0 1 0 7M12 6a8.5 8.5 0 0 1 0 12M15.5 3.5a12 12 0 0 1 0 17"/></svg></div>
+        <b id="rfTitle">Aguardando bicicleta</b><span id="rfSub"></span>
+      </div>
+      <p class="info">A devolução só é concluída quando a tranca lê a tag RFID da <b>mesma bicicleta</b> do seu aluguel.</p>
+      <button class="btn" id="btnLer">Ler tag RFID</button>
+      <div class="hint">Mockup · resultado da leitura</div>
+      <div class="ids" id="dHints"><button class="chipb on" data-sim="ok" aria-pressed="true">Leitura correta</button><button class="chipb" data-sim="other" aria-pressed="false">Tag de outra bicicleta</button><button class="chipb" data-sim="fail" aria-pressed="false">Tag não lida</button></div>
+      <button class="link" id="dProb">Não consegue devolver? Relatar problema</button>
+    </div>
+    <div id="dDone" hidden>
+      <div class="alert on" role="status" style="background:color-mix(in srgb,var(--ok) 12%,var(--bg));border-color:var(--ok);color:var(--ok)"><b>Devolução concluída.</b> Tag RFID confirmada.</div>
+      <div class="stats"><div class="stat"><b id="rdBike">#0000</b><span>Bicicleta</span></div><div class="stat"><b id="rdDur">0 min</b><span>Duração</span></div></div>
+      <p class="sub" id="rdInfo" style="margin-bottom:10px"></p>
+      <button class="btn" data-go="home">Voltar ao início</button>
+      <button class="link" id="rdRelatar">Relatar problema</button>
+    </div>
+  </section>
+
+  <section class="screen" id="problema">
+    <div class="mhead" style="margin:0 -22px"><button class="back" data-go="home" aria-label="Voltar para a tela inicial"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button><div><h3>Problema com o aluguel</h3><p>Conte o que aconteceu.</p></div></div>
+    <div id="pForm">
+      <div class="alert" id="pErr" role="alert"></div>
+      <div class="f" id="fp-tipo"><label for="p-tipo">O que aconteceu?</label><select id="p-tipo"><option value="">Selecione…</option><option value="tranca">A tranca não liberou a bicicleta</option><option value="defeito">A bicicleta está com defeito</option><option value="devolver">Não consigo devolver a bicicleta</option><option value="cobranca">Cobrança indevida</option><option value="outro">Outro problema</option></select><div class="msg">Escolha o tipo de problema.</div></div>
+      <div class="info" id="pTip" hidden></div>
+      <div class="f" id="fp-desc"><label for="p-desc" id="pDescLbl">Descrição (opcional)</label><textarea id="p-desc" maxlength="300" placeholder="Ex.: número da tranca, o que apareceu na tela…"></textarea><div class="msg">Descreva o problema com pelo menos 10 caracteres.</div></div>
+      <p class="sub" id="pCtx" style="font-size:12.5px;margin:0 0 6px"></p>
+      <button class="btn" id="btnProb">Enviar relato</button>
+      <button class="btn sec" data-go="home">Cancelar</button>
+    </div>
+    <div id="pDone" hidden>
+      <div class="alert on" role="status" style="background:color-mix(in srgb,var(--ok) 12%,var(--bg));border-color:var(--ok);color:var(--ok)"><b>Relato enviado.</b> Vamos analisar o seu caso.</div>
+      <div class="stats"><div class="stat"><b id="pdProto" style="font-size:18px">SCB-0000</b><span>Protocolo</span></div><div class="stat"><b id="pdSt" style="font-size:18px">Em análise</b><span>Situação</span></div></div>
+      <p class="sub" id="pdInfo" style="margin-bottom:10px"></p>
+      <button class="btn" data-go="home">Voltar ao início</button>
+    </div>
+  </section>
+
+  <div class="toast" id="toast" role="status"></div>
+</main>
+
+<script>
+const $=id=>document.getElementById(id);
+const sample='data:image/svg+xml;utf8,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 120"><rect width="200" height="120" fill="#cfe0ff"/><rect x="14" y="20" width="50" height="64" rx="6" fill="#1456d9"/><rect x="78" y="28" width="104" height="10" rx="5" fill="#1456d9"/><rect x="78" y="50" width="80" height="10" rx="5" fill="#6b9fff"/><rect x="78" y="72" width="92" height="10" rx="5" fill="#6b9fff"/></svg>');
+let user={nome:'Maria Souza',email:'maria@scb.com',senha:'senha1234',nac:'br',doc:'52998224725',foto:sample};
+let card=null;
+let nac='br',fotoCad=null,fotoDad=null,tt;
+function go(id){document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on',s.id===id));document.querySelectorAll('.side button[data-go]').forEach(b=>b.classList.toggle('on',b.dataset.go===id));
+  if(id==='home'){$('greet').textContent='Olá, '+user.nome.split(' ')[0];$('cardSub').textContent=card?card.brand+' final '+card.last4:'Cadastre para alugar'}
+  if(id==='cartao'){['k-num','k-nome','k-val','k-cvv'].forEach(i=>$(i).value='');clearBad();ccPrev()}
+  if(id==='dados'){$('d-nome').value=user.nome;$('d-email').value=user.email;$('d-doc').value=fmtDoc(user.doc,user.nac);fotoDad=user.foto;setPhoto($('photoD'),fotoDad);clearBad()}
+  if(id==='mapa')loadMapa(false);
+  if(id==='aluguel')showRent();
+  if(id==='devolucao')showDev();
+  if(id==='problema')showProb();
+  if(id==='home')homeRent();
+  if(id==='login'){$('loginErr').classList.remove('on');$('l-pass').value=''}
+  document.querySelector('.screen.on').scrollTop=0}
+function toast(t){const e=$('toast');e.textContent=t;e.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>e.classList.remove('on'),2600)}
+function bad(id,on){$(id).classList.toggle('bad',on);return on}
+function clearBad(){document.querySelectorAll('.f.bad').forEach(f=>f.classList.remove('bad'))}
+function cpfOk(v){v=v.replace(/\D/g,'');if(v.length!==11||/^(\d)\1+$/.test(v))return false;for(let t=9;t<11;t++){let s=0;for(let i=0;i<t;i++)s+=v[i]*(t+1-i);if((s*10%11)%10!=v[t])return false}return true}
+function docOk(v,n){return n==='br'?cpfOk(v):/^[A-Za-z0-9]{6,9}$/.test(v.trim())}
+function fmtDoc(v,n){if(n!=='br')return v;v=v.replace(/\D/g,'').slice(0,11);return v.replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d{1,2})$/,'$1-$2')}
+const mailOk=v=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+function setPhoto(box,src){box.innerHTML=src?'<img alt="Foto do documento" src="'+src+'">':'<span>Tocar para tirar foto ou escolher da galeria</span>'}
+function pick(box,input,cb){box.onclick=()=>input.click();box.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();input.click()}};
+  input.onchange=()=>{const f=input.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{cb(r.result);setPhoto(box,r.result)};r.readAsDataURL(f)}}
+pick($('photo'),$('file'),s=>{fotoCad=s;bad('fc-foto',false)});
+pick($('photoD'),$('fileD'),s=>{fotoDad=s;bad('fd-foto',false)});
+
+document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.go)));
+document.querySelectorAll('[data-eye]').forEach(b=>b.addEventListener('click',()=>{const i=$(b.dataset.eye);const h=i.type==='password';i.type=h?'text':'password';b.textContent=h?'Ocultar':'Mostrar'}));
+document.querySelectorAll('#nac button').forEach(b=>b.addEventListener('click',()=>{nac=b.dataset.n;document.querySelectorAll('#nac button').forEach(x=>x.classList.toggle('on',x===b));
+  $('docLbl').textContent=nac==='br'?'CPF':'Número do passaporte';$('c-doc').placeholder=nac==='br'?'000.000.000-00':'Ex.: AB123456';$('docMsg').textContent=nac==='br'?'CPF inválido.':'Informe um passaporte válido.';$('c-doc').value='';bad('fc-doc',false)}));
+$('c-doc').addEventListener('input',e=>{if(nac==='br')e.target.value=fmtDoc(e.target.value,'br')});
+
+$('btnLogin').onclick=()=>{const e=$('l-email').value.trim(),p=$('l-pass').value;const a=bad('fl-email',!e),b=bad('fl-pass',!p);const box=$('loginErr');box.classList.remove('on');if(a||b)return;
+  if($('offline').checked){box.textContent='Não foi possível entrar agora. Tente novamente.';box.classList.add('on');return}
+  if(e.toLowerCase()===user.email&&p===user.senha){$('l-email').value='';go('home')}else{box.textContent='E-mail ou senha incorretos.';box.classList.add('on')}};
+$('btnCad').onclick=()=>{const n=$('c-nome').value.trim(),d=$('c-doc').value,e=$('c-email').value.trim(),p=$('c-pass').value;
+  const r=[bad('fc-nome',!n),bad('fc-doc',!docOk(d,nac)),bad('fc-foto',!fotoCad),bad('fc-email',!mailOk(e)),bad('fc-pass',p.length<8)];if(r.some(Boolean))return;
+  user={nome:n,email:e.toLowerCase(),senha:p,nac,doc:d.replace(/\D/g,'')||d.trim(),foto:fotoCad};
+  ['c-nome','c-doc','c-email','c-pass'].forEach(i=>$(i).value='');fotoCad=null;setPhoto($('photo'),null);go('login');$('l-email').value=user.email;toast('Conta criada. Entre para continuar.')};
+$('btnSalvar').onclick=()=>{const n=$('d-nome').value.trim(),e=$('d-email').value.trim(),d=$('d-doc').value;
+  const r=[bad('fd-nome',!n),bad('fd-email',!mailOk(e)),bad('fd-doc',!docOk(d,user.nac)),bad('fd-foto',!fotoDad)];if(r.some(Boolean))return;
+  user={...user,nome:n,email:e.toLowerCase(),doc:user.nac==='br'?d.replace(/\D/g,''):d.trim(),foto:fotoDad};go('home');toast('Dados atualizados.')};
+$('btnCancel').onclick=()=>go('home');
+
+/* US05 – Cartão de crédito */
+function luhn(n){let s=0,d=false;for(let i=n.length-1;i>=0;i--){let x=+n[i];if(d){x*=2;if(x>9)x-=9}s+=x;d=!d}return s%10===0}
+function brandOf(n){return /^4/.test(n)?'Visa':/^(5[1-5]|2[2-7])/.test(n)?'Mastercard':/^3[47]/.test(n)?'Amex':/^(4011|4312|4389|4514|4576|5041|5067|509|6277|6362|6363|650|6516|6550)/.test(n)?'Elo':'Cartão'}
+function expOk(v){const m=/^(\d{2})\/(\d{2})$/.exec(v);if(!m)return false;const mm=+m[1],yy=2000+ +m[2],now=new Date();return mm>=1&&mm<=12&&(yy>now.getFullYear()||(yy===now.getFullYear()&&mm>=now.getMonth()+1))}
+function ccPrev(){const n=$('k-num').value.replace(/\D/g,'');
+  if(!n&&!$('k-nome').value&&!$('k-val').value&&card){$('ccBrand').textContent=card.brand;$('ccNum').textContent='•••• •••• •••• '+card.last4;$('ccName').textContent=card.nome;$('ccExp').textContent=card.exp;return}
+  $('ccBrand').textContent=brandOf(n);$('ccNum').textContent=(n.padEnd(16,'•').match(/.{1,4}/g)||[]).join(' ');
+  $('ccName').textContent=$('k-nome').value.toUpperCase()||'NOME NO CARTÃO';$('ccExp').textContent=$('k-val').value||'MM/AA'}
+$('k-num').addEventListener('input',e=>{const n=e.target.value.replace(/\D/g,'').slice(0,16);e.target.value=n.replace(/(.{4})/g,'$1 ').trim();ccPrev()});
+$('k-val').addEventListener('input',e=>{let v=e.target.value.replace(/\D/g,'').slice(0,4);if(v.length>2)v=v.slice(0,2)+'/'+v.slice(2);e.target.value=v;ccPrev()});
+$('k-cvv').addEventListener('input',e=>{e.target.value=e.target.value.replace(/\D/g,'').slice(0,4)});
+$('k-nome').addEventListener('input',ccPrev);
+$('btnCartao').onclick=()=>{const n=$('k-num').value.replace(/\D/g,''),nm=$('k-nome').value.trim(),v=$('k-val').value,c=$('k-cvv').value;
+  const r=[bad('fk-num',n.length<13||!luhn(n)),bad('fk-nome',nm.length<3),bad('fk-val',!expOk(v)),bad('fk-cvv',!/^\d{3,4}$/.test(c))];if(r.some(Boolean))return;
+  card={brand:brandOf(n),last4:n.slice(-4),nome:nm.toUpperCase(),exp:v};go('home');toast('Cartão salvo: final '+card.last4+'.')};
+$('btnCartaoVoltar').onclick=()=>go('home');
+
+/* US06 – Mapa de totens, bicicletas e vagas */
+const USER={x:52,y:64},MW=1000,MH=800;
+const totens=[
+ {id:1,nome:'Totem Praça Central',end:'Praça Central, s/n',x:46,y:55,cap:12,b:['0142','0157','0163','0171','0188','0194']},
+ {id:2,nome:'Totem Parque da Cidade',end:'Entrada principal do parque',x:72,y:30,cap:10,b:['0203','0219','0224']},
+ {id:3,nome:'Totem Terminal Rodoviário',end:'Av. do Terminal, 100',x:20,y:38,cap:8,b:['0301','0302','0305','0309','0311','0314','0318','0320']},
+ {id:4,nome:'Totem Av. Principal',end:'Av. Principal, 500',x:70,y:74,cap:10,b:[]},
+ {id:5,nome:'Totem Biblioteca Municipal',end:'Rua das Letras, 45',x:38,y:82,cap:12,b:['0412','0415','0421','0430','0433','0438','0440','0447','0452']},
+ {id:6,nome:'Totem Universidade',end:'Portaria 2 – Campus',x:86,y:56,cap:14,b:['0501','0507']}
+];
+totens.forEach(t=>{t.n=t.b.length;t.livres=t.cap-t.n;t.dist=Math.round(Math.hypot((t.x-USER.x)*MW/100,(t.y-USER.y)*MH/100)/10)*10});
+let mF='all',mSel=null,mState='load',mT;
+const fd=d=>d<1000?d+' m':(d/1000).toFixed(1).replace('.',',')+' km';
+const wk=d=>Math.max(1,Math.round(d/80))+' min a pé';
+const okF=(t,f)=>f==='bikes'?t.n>0:f==='slots'?t.livres>0:true;
+const vis=()=>totens.filter(t=>okF(t,mF)).sort((a,b)=>a.dist-b.dist);
+const plural=(n,a,b)=>n+' '+(n===1?a:b);
+function tcard(t){return '<button class="tcard" data-t="'+t.id+'"><span class="n'+(t.n?'':' zero')+'">'+t.n+'</span><span>'+t.nome+'<small>'+fd(t.dist)+' · '+wk(t.dist)+'</small></span><span class="r">'+plural(t.n,'bicicleta','bicicletas')+'<br>'+plural(t.livres,'vaga','vagas')+'</span></button>'}
+function renderMapa(){
+  const ok=mState==='ok',list=vis(),box=$('mapBox'),sh=$('mSheet');
+  box.classList.toggle('dim',!ok);
+  $('mLegend').textContent='Número no pino: '+(mF==='slots'?'vagas livres':'bicicletas');
+  $('pins').innerHTML=!ok?'':list.map(t=>{const v=mF==='slots'?t.livres:t.n;
+    return '<button class="pin'+(v?'':' zero')+(t.id===mSel?' sel':'')+'" data-t="'+t.id+'" style="left:'+t.x+'%;top:'+t.y+'%;z-index:'+(t.id===mSel?5:Math.round(t.y/10))+'" aria-pressed="'+(t.id===mSel)+'" aria-label="'+t.nome+': '+plural(t.n,'bicicleta','bicicletas')+', '+plural(t.livres,'vaga livre','vagas livres')+'">'+v+'</button>'}).join('');
+  if(mState==='load'){sh.innerHTML='<p class="sub">Carregando totens…</p>';return}
+  if(mState==='err'){sh.innerHTML='<div class="alert on" role="alert">Não foi possível carregar os totens. Tente novamente.</div><button class="btn sec" id="mRetry">Tentar novamente</button>';return}
+  const t=totens.find(x=>x.id===mSel);
+  if(t){
+    const no=t.n===0||t.livres===0,st=t.n===0?'Sem bicicletas':t.livres===0?'Sem vagas':'Disponível';
+    const alt=t.n===0?[...totens].filter(x=>x.n>0).sort((a,b)=>a.dist-b.dist)[0]:t.livres===0?[...totens].filter(x=>x.livres>0).sort((a,b)=>a.dist-b.dist)[0]:null;
+    sh.innerHTML='<button class="lk" id="mBack">‹ Voltar à lista</button><h3 style="font-size:18px;margin:0">'+t.nome+'</h3><p class="sub" style="margin:2px 0 8px">'+t.end+' · '+fd(t.dist)+' · '+wk(t.dist)+'</p><span class="badge'+(no?' no':'')+'">'+st+'</span>'+
+     '<div class="stats"><div class="stat"><b>'+t.n+'</b><span>Bicicletas disponíveis</span></div><div class="stat"><b>'+t.livres+'</b><span>Vagas livres de '+t.cap+'</span></div></div>'+
+     (t.n?'<b style="font-size:13px">Bicicletas neste totem</b><div class="ids">'+t.b.map(i=>'<span>#'+i+'</span>').join('')+'</div>':'<p class="sub">Nenhuma bicicleta neste totem agora.</p>')+
+     (alt?'<b style="font-size:13px">Mais próximo '+(t.n===0?'com bicicletas':'com vagas')+'</b><div style="margin-top:8px">'+tcard(alt)+'</div>':'')+
+     '<button class="btn" id="mRent">Alugar bicicleta</button>';
+    sh.scrollTop=0;return}
+  if(!list.length){sh.innerHTML='<p class="sub">Nenhum totem com '+(mF==='bikes'?'bicicletas':'vagas')+' disponíveis agora.</p><button class="btn sec" id="mAll">Ver todos os totens</button>';return}
+  sh.innerHTML='<div class="lh"><b>Totens perto de você</b><span>'+plural(list.length,'encontrado','encontrados')+'</span></div>'+list.map(tcard).join('');
+}
+function loadMapa(msg){mState='load';mSel=null;renderMapa();clearTimeout(mT);
+  mT=setTimeout(()=>{mState=$('offline').checked?'err':'ok';renderMapa();if(msg&&mState==='ok')toast('Mapa atualizado.')},500)}
+function selT(id){mSel=id===mSel?null:id;renderMapa()}
+$('mapa').addEventListener('click',e=>{const t=e.target.closest('[data-t]'),id=e.target.id;
+  if(t)return selT(+t.dataset.t);
+  if(e.target.closest('#mBack'))return selT(null);
+  if(id==='mRetry')return loadMapa(true);
+  if(id==='mRent')return go('aluguel');
+  if(id==='mAll')return setF('all')});
+function setF(f){mF=f;document.querySelectorAll('#mChips button').forEach(b=>{const on=b.dataset.f===f;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on)});
+  if(mSel&&!okF(totens.find(x=>x.id===mSel),f))mSel=null;renderMapa()}
+document.querySelectorAll('#mChips button').forEach(b=>b.addEventListener('click',()=>setF(b.dataset.f)));
+$('mRefresh').onclick=()=>loadMapa(true);
+
+/* US07 – Iniciar aluguel */
+const trancas={101:{totem:1,bike:'0142',st:'ok'},102:{totem:1,bike:null,st:'ok'},103:{totem:2,bike:'0219',st:'manut'},104:{totem:3,bike:'0305',st:'defeito'},105:{totem:5,bike:'0412',st:'ok'}};
+let rental=null;
+function showRent(){$('rErr').classList.remove('on');bad('fr-num',false);$('r-num').value='';
+  $('rForm').hidden=!!rental;$('rActive').hidden=!rental;
+  if(rental){const t=totens.find(x=>x.id===rental.totem);$('raBike').textContent='#'+rental.bike;$('raTr').textContent=rental.tr;$('raInfo').textContent='Retirada em '+t.nome+' às '+rental.hora+'.';$('raProb').hidden=!rental.prob;$('raProb').textContent=rental.prob?'Problema relatado · protocolo '+rental.prob+'.':''}}
+function homeRent(){$('rentSub').textContent=rental?'Aluguel ativo · bicicleta #'+rental.bike:'Informe o número da tranca';$('homeDev').hidden=!rental;if(rental)$('devSub').textContent='Bicicleta #'+rental.bike+' · leitura da tag RFID'}
+function rentErr(m){const b=$('rErr');b.textContent=m;b.classList.add('on')}
+function startRent(){const v=$('r-num').value.trim();$('rErr').classList.remove('on');
+  if(bad('fr-num',!/^\d{1,6}$/.test(v)))return;
+  if(rental){showRent();return}
+  if($('offline').checked)return rentErr('Não foi possível iniciar o aluguel agora. Tente novamente.');
+  const tr=trancas[+v];
+  if(!tr)return rentErr('Tranca não encontrada. Confira o número impresso na tranca.');
+  if(tr.st==='defeito')return rentErr('A tranca '+v+' está indisponível. Escolha outra tranca.');
+  if(!tr.bike)return rentErr('A tranca '+v+' não tem bicicleta no momento. Escolha outra tranca.');
+  if(tr.st==='manut')return rentErr('A bicicleta da tranca '+v+' está indisponível (em manutenção). Escolha outra tranca.');
+  const t=totens.find(x=>x.id===tr.totem);t.b=t.b.filter(x=>x!==tr.bike);t.n=t.b.length;t.livres=t.cap-t.n;
+  rental={ini:Date.now(),prob:null,tr:v,bike:tr.bike,totem:tr.totem,hora:new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})};tr.bike=null;
+  showRent();toast('Aluguel iniciado. Retire a bicicleta.')}
+$('btnAlugar').onclick=startRent;
+$('r-num').addEventListener('input',e=>{e.target.value=e.target.value.replace(/\D/g,'');bad('fr-num',false)});
+$('r-num').addEventListener('keydown',e=>{if(e.key==='Enter')startRent()});
+$('rHints').addEventListener('click',e=>{const b=e.target.closest('[data-tr]');if(b){$('r-num').value=b.dataset.tr;bad('fr-num',false);$('r-num').focus()}});
+/* US08 – Devolução com RFID */
+let sim='ok',busy=false,rfT,probPre='';
+function setRf(st,title,sub){const r=$('rfid');r.className='rfid'+(st?' '+st:'');$('rfTitle').textContent=title;$('rfSub').textContent=sub}
+function fmtDur(m){return m<60?m+' min':Math.floor(m/60)+' h '+String(m%60).padStart(2,'0')+' min'}
+function showDev(){clearTimeout(rfT);busy=false;$('btnLer').disabled=false;$('dErr').classList.remove('on');bad('fd-totem',false);
+  $('dDone').hidden=true;$('dNone').hidden=!!rental;$('dForm').hidden=!rental;
+  if(!rental)return;
+  const sel=$('d-totem'),near=[...totens].filter(t=>t.livres>0).sort((a,b)=>a.dist-b.dist)[0];
+  sel.innerHTML=[...totens].sort((a,b)=>a.dist-b.dist).map(t=>'<option value="'+t.id+'"'+(t.livres?'':' disabled')+'>'+t.nome+' · '+(t.livres?plural(t.livres,'vaga livre','vagas livres'):'sem vagas')+'</option>').join('');
+  if(near)sel.value=near.id;
+  setRf('','Aguardando bicicleta','Encaixe a bicicleta #'+rental.bike+' em uma vaga livre e toque em “Ler tag RFID”.')}
+function doReturn(){if(busy||!rental)return;
+  const t=totens.find(x=>x.id===+$('d-totem').value);$('dErr').classList.remove('on');
+  if(bad('fd-totem',!t||t.livres<1))return;
+  busy=true;$('btnLer').disabled=true;setRf('read','Lendo tag RFID…','Mantenha a bicicleta encaixada.');
+  rfT=setTimeout(()=>{busy=false;$('btnLer').disabled=false;const e=$('dErr');
+    if($('offline').checked){setRf('bad','Sem conexão','Não foi possível confirmar a devolução.');e.textContent='Não foi possível confirmar a devolução agora. Mantenha a bicicleta encaixada e tente novamente.';e.classList.add('on');return}
+    if(sim==='fail'){setRf('bad','Tag não lida','Reencaixe a bicicleta e leia de novo.');e.textContent='Não foi possível ler a tag RFID. Reencaixe a bicicleta na vaga e tente novamente. Se continuar, relate um problema.';e.classList.add('on');return}
+    if(sim==='other'){setRf('bad','Bicicleta diferente','Tag lida: #0999 · seu aluguel: #'+rental.bike);e.textContent='A bicicleta encaixada não é a do seu aluguel. Retire-a e encaixe a bicicleta #'+rental.bike+'.';e.classList.add('on');return}
+    finishReturn(t)},1200)}
+function finishReturn(t){const r=rental,vaga=t.n+1,dur=Math.max(1,Math.round((Date.now()-r.ini)/60000));
+  t.b.push(r.bike);t.n=t.b.length;t.livres=t.cap-t.n;if(t.id===r.totem)trancas[+r.tr].bike=r.bike;
+  rental=null;$('dForm').hidden=true;$('dDone').hidden=false;
+  $('rdBike').textContent='#'+r.bike;$('rdDur').textContent=fmtDur(dur);
+  $('rdInfo').textContent='Devolvida em '+t.nome+' (vaga '+vaga+')'+(card?'. Cobrança no cartão final '+card.last4+'.':'.')+' Você já pode alugar de novo.';
+  toast('Bicicleta devolvida.')}
+$('btnLer').onclick=doReturn;
+$('dHints').addEventListener('click',e=>{const b=e.target.closest('[data-sim]');if(!b)return;sim=b.dataset.sim;document.querySelectorAll('#dHints button').forEach(x=>{const on=x===b;x.classList.toggle('on',on);x.setAttribute('aria-pressed',on)})});
+$('d-totem').addEventListener('change',()=>bad('fd-totem',false));
+$('dProb').onclick=()=>{probPre='devolver';go('problema')};
+$('rdRelatar').onclick=()=>{probPre='cobranca';go('problema')};
+
+/* US09 – Problema com o aluguel */
+const problemas=[];
+const tips={tranca:'Enquanto analisamos, você pode tentar outra tranca do mesmo totem.',defeito:'Por segurança, pare de usar a bicicleta e devolva em qualquer totem com vaga livre.',devolver:'Confira se a bicicleta está bem encaixada. A leitura RFID pode falhar: reencaixe e tente de novo.',cobranca:'Informe o valor e o horário da cobrança na descrição.',outro:''};
+function updProb(){const t=$('p-tipo').value;bad('fp-tipo',false);$('pTip').hidden=!tips[t];$('pTip').textContent=tips[t]||'';$('pDescLbl').textContent=t==='outro'?'Descrição':'Descrição (opcional)';bad('fp-desc',false)}
+function showProb(){$('pErr').classList.remove('on');clearBad();$('pDone').hidden=true;$('pForm').hidden=false;
+  $('p-tipo').value=probPre;probPre='';$('p-desc').value='';updProb();
+  $('pCtx').textContent=rental?'Será vinculado ao aluguel ativo: bicicleta #'+rental.bike+', tranca '+rental.tr+'.':'Nenhum aluguel ativo. O relato será enviado sem vínculo com uma bicicleta.'}
+$('p-tipo').addEventListener('change',updProb);
+$('p-desc').addEventListener('input',()=>bad('fp-desc',false));
+$('btnProb').onclick=()=>{const t=$('p-tipo').value,d=$('p-desc').value.trim();$('pErr').classList.remove('on');
+  const r=[bad('fp-tipo',!t),bad('fp-desc',t==='outro'&&d.length<10)];if(r.some(Boolean))return;
+  if($('offline').checked){$('pErr').textContent='Não foi possível enviar o relato agora. Seus dados foram mantidos; tente novamente.';$('pErr').classList.add('on');return}
+  const proto='SCB-'+new Date().getFullYear()+'-'+String(problemas.length+1).padStart(4,'0');
+  problemas.push({proto,tipo:t,desc:d,bike:rental?rental.bike:null,tr:rental?rental.tr:null});if(rental)rental.prob=proto;
+  $('pForm').hidden=true;$('pDone').hidden=false;$('pdProto').textContent=proto;
+  $('pdInfo').textContent=rental?'Seu aluguel continua ativo. Guarde o protocolo para acompanhar o caso.':'Guarde o protocolo para acompanhar o caso.';
+  toast('Relato enviado.')};
+$('rProb').onclick=()=>{probPre='tranca';go('problema')};
+$('raRelatar').onclick=()=>{probPre='';go('problema')};
+$('btnSair').onclick=()=>{go('login');$('l-email').value=''};
+go('login');
+</script>
+</body>
+</html>
